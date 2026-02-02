@@ -66,15 +66,16 @@ with c2:
     st.checkbox("Arapça Yazma")
 
 with c3:
-    st.markdown("### 🚢 İhracat")
-    st.checkbox("Evrak Kontrolü")
-    st.checkbox("Gemi Takibi")
+    st.markdown("### 🚢 Sosyal Medya")
+    st.checkbox("Hikaye")
+    st.checkbox("Post")
+    st.checkbox("Reels")
 
 st.divider()
 
 # --- BÖLÜM 3: Yeni Fikirler ---
 st.header("✨ Yeni Fikirler")
-fikir_kategori = st.selectbox("Fikir Türü", ["İş", "Dini", "Genel"])
+fikir_kategori = st.selectbox("Fikir Türü", ["İş", "Dini", "Genel", "Kişisel" ])
 fikir_notu = st.text_area("Aklına gelen detayı buraya bırak...")
 
 # --- BÖLÜM 4: KAYDETME ---
