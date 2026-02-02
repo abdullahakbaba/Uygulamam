@@ -10,8 +10,8 @@ st.set_page_config(page_title="Akbaba Asistan", page_icon="📖", layout="center
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     st.success("Google Sheets bağlantısı OK ✅")
-except Exception as e:
-    st.exception(e)
+except Exception as 
+e: st.error("Bağlantı hatası! Secrets ayarlarını kontrol et.")
 
 
 st.title("🚀 Akbaba Günlük Takip Paneli")
