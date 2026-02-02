@@ -15,7 +15,7 @@ st.header("🕌 Güne Başlarken")
 # İlk satır: Uyanış ve Enerji
 col_u1, col_u2 = st.columns(2)
 with col_u1:
-    uyanis_saati = st.time_input("☀️ Uyandığın Saat", time(7, 0))
+    uyanis_saati = st.time_input("☀️ Uyandığın Saat", time(5, 0))
 with col_u2:
     enerji = st.select_slider("⚡ Enerji Seviyen", options=["Düşük", "Orta", "Yüksek", "Fişek"])
 
