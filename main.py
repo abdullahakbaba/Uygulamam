@@ -48,7 +48,7 @@ with m4:
 st.divider()
 
 # --- BÖLÜM 2: İş & Dil Gelişim ---
-st.header("💻 İş, Yazılım ve Kariyer")
+st.header("💻 İş & Dil Gelişim")
 c1, c2, c3 = st.columns(3)
 
 with c1:
