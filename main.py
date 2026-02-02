@@ -24,6 +24,7 @@ with col2:
     st.markdown("### 📖 Hadis")
     hadis_check = st.checkbox("Okundu", key="chk_hadis")
     hadis_sayfa = st.number_input("Sayfa:", min_value=0, value=2, step=1, key="num_hadis")
+    st.markdown("### 📖 Tefsir")
     tefsir_check = st.checkbox("Tefsir", key="chk_tefsir")
 
 with col3:
