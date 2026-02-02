@@ -3,10 +3,10 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 from datetime import datetime, time
 
-# Uygulama Ayarları
+# 1. Uygulama Ayarları
 st.set_page_config(page_title="Akbaba Asistan", page_icon="📖", layout="centered")
 
-# Google Sheets Bağlantısı
+# 2. Google Sheets Bağlantısı
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
 except Exception as e:
@@ -45,35 +45,36 @@ c1, c2, c3 = st.columns(3)
 
 with c1:
     st.markdown("### 🌎 İngilizce")
-    i_kel = st.checkbox("Kelime Ezber")
-    i_oku = st.checkbox("Okuma", key="i_ok")
-    i_din = st.checkbox("Dinleme", key="i_di")
-    i_yaz = st.checkbox("Yazma", key="i_ya")
+    i_kel = st.checkbox("Kelime Ezber", key="i_k")
+    i_oku = st.checkbox("Okuma", key="i_o")
+    i_din = st.checkbox("Dinleme", key="i_d")
+    i_yaz = st.checkbox("Yazma", key="i_y")
 
 with c2:
     st.markdown("### 🌎 Arapça")
-    a_kel = st.checkbox("Kelime Ezber", key="a_ke")
-    a_oku = st.checkbox("Arapça Okuma", key="a_ok")
-    a_din = st.checkbox("Arapça Dinleme", key="a_di")
-    a_yaz = st.checkbox("Arapça Yazma", key="a_ya")
+    a_kel = st.checkbox("Kelime Ezber", key="a_k")
+    a_oku = st.checkbox("Arapça Okuma", key="a_o")
+    a_din = st.checkbox("Arapça Dinleme", key="a_d")
+    a_yaz = st.checkbox("Arapça Yazma", key="a_y")
 
 with c3:
     st.markdown("### 📱 Sosyal Medya")
-    s_hik = st.checkbox("Hikaye")
-    s_pos = st.checkbox("Post")
-    s_ree = st.checkbox("Reels")
+    s_hik = st.checkbox("Hikaye", key="s_h")
+    s_pos = st.checkbox("Post", key="s_p")
+    s_ree = st.checkbox("Reels", key="s_r")
 
 st.divider()
 
 # --- BÖLÜM 3: YENİ FİKİRLER ---
 st.header("✨ Yeni Fikirler")
 fikir_kat = st.selectbox("Fikir Türü", ["İş", "Dini", "Genel", "Kişisel"])
-fikir_not = st.text_area("Notunu buraya bırak...")
+fikir_not = st.text_area("Notunu buraya bırak...", key="f_n")
 
-# --- BÖLÜM 4: KAYDETME (GÜNCELLENMİŞ VE SAĞLAMLAŞTIRILMIŞ) ---
+# --- BÖLÜM 4: KAYDETME ---
 if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     tarih_str = datetime.now().strftime('%Y-%m-%d')
     
+    # Verileri topluyoruz (Değişken isimleri yukarıdakilerle birebir aynı)
     yeni_satir = pd.DataFrame([{
         "Tarih": tarih_str,
         "Uyanis": uyanis_saati.strftime('%H:%M'),
@@ -83,7 +84,7 @@ if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
         "Hadis": hadis_sayfa,
         "Tefsir": tefsir_sayfa,
         "Ing_Kelime": "Evet" if i_kel else "Hayır",
-        "Ing_Okuma": "Evet" if i_ok else "Hayır",
+        "Ing_Okuma": "Evet" if i_oku else "Hayır",
         "Ing_Dinleme": "Evet" if i_din else "Hayır",
         "Ing_Yazma": "Evet" if i_yaz else "Hayır",
         "Ara_Kelime": "Evet" if a_kel else "Hayır",
@@ -97,22 +98,8 @@ if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     }])
 
     try:
-        # worksheet="Sheet1" olarak güncelledik (Sheets'te de böyle yap)
-        # ttl=0 ekledik ki her seferinde taze veriyi çeksin
+        # worksheet ismini "Sheet1" olarak kullanıyoruz, Google Sheets'te de böyle yap aga
         mevcut_veri = conn.read(worksheet="Sheet1", ttl=0)
         
         if mevcut_veri is not None and not mevcut_veri.empty:
-            guncel_df = pd.concat([mevcut_veri, yeni_satir], ignore_index=True)
-        else:
-            guncel_df = yeni_satir
-
-        conn.update(worksheet="Sheet1", data=guncel_df)
-        
-        st.balloons()
-        st.success("İşlem Başarılı! Veriler Excel'e uçtu.")
-    except Exception as e:
-        st.error(f"Hata detayı: {e}")
-        st.balloons()
-        st.success("Tüm detaylar Excel'e işlendi aga! Helal olsun.")
-    except Exception as e:
-        st.error(f"Hata: {e}")
+            guncel_df = pd.concat([mevcut_veri, yeni
