@@ -27,7 +27,7 @@ with col2:
 
 with col3:
     st.markdown("### 📖 Tefsir")
-    tefsir_check = st.checkbox("Tefsir", key="chk_tefsir")
+    tefsir_check = st.checkbox("Tefsir", key="chk_okundu")
 
 
 # --- BÖLÜM 2: FİKİR DEFTERİ ---
