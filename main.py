@@ -52,14 +52,18 @@ st.header("💻 İş, Yazılım ve Kariyer")
 c1, c2, c3 = st.columns(3)
 
 with c1:
-    st.markdown("### 🐍 Yazılım")
-    py_calisildi = st.checkbox("Python/Pandas")
-    py_saat = st.number_input("Kaç Saat?", min_value=0.0, value=1.0, step=0.5)
+    st.markdown("### 🌎 Dil")
+    st.checkbox("İngilizce Okuma")
+    st.checkbox("İngilizce Yazma")
+    st.checkbox("İngilizce Dinleme")
+    st.checkbox("İngilizce Kelime Ezberleme")
 
 with c2:
     st.markdown("### 🌎 Dil")
-    st.checkbox("İngilizce Pratik")
-    st.checkbox("Arapça Çalışma")
+    st.checkbox("Arapça Kelime Ezberleme")
+    st.checkbox("Arapça Okuma")
+    st.checkbox("Arapça Dinleme")
+    st.checkbox("Arapça Yazma")
 
 with c3:
     st.markdown("### 🚢 İhracat")
