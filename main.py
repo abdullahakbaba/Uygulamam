@@ -23,13 +23,16 @@ with col_u2:
 st.markdown("#### 📝 Günlük Okuma Miktarların")
 m1, m2, m3 = st.columns(3)
 
+# Önce 4 tane boş sütun (yer) açıyoruz
+m1, m2, m3, m4 = st.columns(4)
+
 with m1:
     st.markdown("**Kur'an-ı Kerim**")
     kuran_sayfa = st.number_input("Sayfa", min_value=0, value=10, step=1, key="kuran_ana")
 
 with m2:
     st.markdown("**Tevbe Duası**")
-    st.checkbox("Yapıldı", key="chk_tevbe") # İşte istediğin sadece tikli alan
+    st.checkbox("Yapıldı", key="chk_tevbe")
 
 with m3:
     st.markdown("**Hadis-i Şerif**")
