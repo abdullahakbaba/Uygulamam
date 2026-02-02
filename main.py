@@ -39,7 +39,7 @@ with m2:
     
 with m3:
     st.markdown("**Tefsir**")
-    tefsir_sayfa = st.number_input("Kaç Sayfa Tefsir?", min_value=0, value=5, step=1, key="tefsir_ana")
+    tefsir_sayfa = st.number_input("Kaç Sayfa Tefsir?", min_value=0, value=2, step=1, key="tefsir_ana")
     st.caption("Bugünkü hedef :2")
     
 st.divider()
