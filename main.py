@@ -93,4 +93,4 @@ if st.button("💾 VERİLERİ GEÇİCİ OLARAK ONAYLA"):
 
 # Alt Bilgi
 st.markdown("---")
-st.caption(f"Tarih: {datetime.now().strftime('%d/%m/%Y')} | Mezuniyete Az Kaldı!")
+st.caption(f"Tarih: {datetime.now().strftime('%d/%m/%Y')} | Allahın İzni ile Başaracağız!")
