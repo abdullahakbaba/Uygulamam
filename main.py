@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 
 # Uygulama Başlığı
-st.set_page_config(page_title="Aga'nın Paneli", page_icon="👔", layout="centered")
+st.set_page_config(page_title="Akbaba'nın Paneli", page_icon="👔", layout="centered")
 
 st.title("🚀 Kişisel Yönetim Paneli")
 
@@ -14,9 +14,10 @@ st.write(f"Tarih: {tarih}")
 
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown("### 📚 İlim & Dil")
-    r1 = st.checkbox("Risale-i Nur Okundu")
-    r2 = st.checkbox("İngilizce/Arapça Pratik")
+    st.markdown("### 📖 Risale-i Nur")
+    risale_okundu = st.checkbox("Bugün Okundu", key="rn_check")
+    # Sayı giriş alanı: Varsayılan 10, ama sen 0-500 arası istediğini yazabilirsin
+    risale_sayfa = st.number_input("Kaç sayfa okudun?", min_value=0, value=10, step=1, key="rn_page")
 with col2:
     st.markdown("### 💻 İş & Yazılım")
     r3 = st.checkbox("Python/Pandas Çalışıldı")
