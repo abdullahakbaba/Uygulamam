@@ -24,13 +24,11 @@ with col2:
     st.markdown("### 📖 Hadis")
     hadis_check = st.checkbox("Okundu", key="chk_hadis")
     hadis_sayfa = st.number_input("Sayfa:", min_value=0, value=2, step=1, key="num_hadis")
+
+with col3:
     st.markdown("### 📖 Tefsir")
     tefsir_check = st.checkbox("Tefsir", key="chk_tefsir")
 
-with col3:
-    st.markdown("### 💻 İş & Yazılım")
-    python_check = st.checkbox("Python", key="chk_python")
-    export_check = st.checkbox("İhracat", key="chk_export")
 
 # --- BÖLÜM 2: FİKİR DEFTERİ ---
 st.divider()
