@@ -33,10 +33,9 @@ with m1:
     tefsir_sayfa = st.number_input("Kaç Tane Sure Ezberledin?", min_value=0, value=0, step=1, key="ezber_ana")
     
 with m2:
-    st.markdown("**Hadis-i Şerif**")
-    hadis_sayfa = st.number_input("Kaç Hadis/Sayfa?", min_value=0, value=2, step=1, key="hadis_ana")
-    st.checkbox("Tevbe Duası 🤲", key="chk_tevbe") # Sadece tikli alan
-    st.caption("Bugünkü hedef: 2")
+    st.markdown("**Tevbe Duası**")
+    st.checkbox("Yapıldı", key="chk_tevbe")
+    st.caption("Günlük Tevbe")
 
 with m2:
     st.markdown("**Hadis-i Şerif**")
