@@ -109,6 +109,6 @@ if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
         st.balloons()
         st.success("Tüm detaylar Excel'e işlendi aga! Helal olsun.")
     except Exception as e:
-    st.exception(e)
-    st.stop()
+        st.exception(e)
+        st.stop()
 
