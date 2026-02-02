@@ -53,10 +53,10 @@ c1, c2, c3 = st.columns(3)
 
 with c1:
     st.markdown("### 🌎 Dil")
-    st.checkbox("İngilizce Okuma")
-    st.checkbox("İngilizce Yazma")
-    st.checkbox("İngilizce Dinleme")
     st.checkbox("İngilizce Kelime Ezberleme")
+    st.checkbox("İngilizce Okuma")
+    st.checkbox("İngilizce Dinleme")
+    st.checkbox("İngilizce Yazma")
 
 with c2:
     st.markdown("### 🌎 Dil")
