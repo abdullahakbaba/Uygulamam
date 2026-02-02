@@ -37,10 +37,10 @@ st.header("💻 İş & Dil")
 c1, c2, c3 = st.columns(3)
 with c1:
     st.markdown("### 🌎 İngilizce")
-    ik = st.checkbox("Kelime")
-    io = st.checkbox("Okuma")
-    idin = st.checkbox("Dinleme")
-    iy = st.checkbox("Yazma")
+    ik = st.checkbox("İngilizce Kelime")
+    io = st.checkbox("İngilizce Okuma")
+    idin = st.checkbox("İngilizce Dinleme")
+    iy = st.checkbox("İngilizce Yazma")
 with c2:
     st.markdown("### 🌎 Arapça")
     ak = st.checkbox("Arapça Kelime")
@@ -56,10 +56,10 @@ with c3:
 st.divider()
 fikir_v = st.text_area("✨ Yeni Fikirler")
 
-# --- BÖLÜM 4: KAYDETME ---
 if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     tarih_str = datetime.now().strftime('%Y-%m-%d')
     
+    # Senin koddaki değişkenleri (ik, io vb.) tek tek buraya eşitledim
     yeni_satir = {
         "Tarih": tarih_str,
         "Uyanis": uyanis_v.strftime('%H:%M'),
@@ -83,21 +83,19 @@ if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     }
 
     try:
-        # Mevcut veriyi taze çek (ttl=0)
+        # Sheet1 ismini kontrol etmeyi unutma aga!
         df = conn.read(worksheet="Sheet1", ttl=0)
         
-        # Eğer tablo tamamen boşsa yeni dataframe oluştur, doluysa altına ekle
-        if df is not None and not df.empty:
-            df_yeni = pd.concat([df, pd.DataFrame([yeni_satir])], ignore_index=True)
+        # Eğer tablo tamamen boşsa başlıkları kendisi oluştursun
+        if df is None or df.empty:
+            df_guncel = pd.DataFrame([yeni_satir])
         else:
-            df_yeni = pd.DataFrame([yeni_satir])
-            
-        # Sheets'e gönder
-        conn.update(worksheet="Sheet1", data=df_yeni)
-        
+            # Sütunları hizalayarak ekle (Eksik/Fazla sütun hatasını önler)
+            yeni_df = pd.DataFrame([yeni_satir])
+            df_guncel = pd.concat([df, yeni_df], ignore_index=True, sort=False)
+
+        conn.update(worksheet="Sheet1", data=df_guncel)
         st.balloons()
-        st.success("Aga sonunda başardık! Veri Excel'e uçtu.")
+        st.success("SONUNDA OLDU AGA!")
     except Exception as e:
-        # Hatayı daha detaylı görmek için burayı güncelledim
-        st.error(f"Bağlantı Hatası: {e}")
-        st.info("İpucu: Google Sheets'teki sayfa adının 'Sheet1' olduğundan ve başlıkların yan yana olduğundan emin ol.")
+        st.error(f"Hata detayı (Bunu bana at): {e}")
