@@ -1,62 +1,56 @@
 import streamlit as st
+from streamlit_gsheets import GSheetsConnection
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, time
 
 # Uygulama Ayarları
-st.set_page_config(page_title="Akbaba'nın Paneli", page_icon="👔", layout="centered")
+st.set_page_config(page_title="Akbaba'nın Paneli", page_icon="👔")
 
-st.title("🚀 Kişisel Yönetim Paneli")
+st.title("🚀 Veri Kayıtlı Asistan")
 
-# --- UYANIŞ SAATİ ---
+# Google Sheets Bağlantısı (Ayarları Advanced Settings'ten yapılacak)
+conn = st.connection("gsheets", type=GSheetsConnection)
+
+# --- YENİ: UYANIŞ SAATİ ---
 st.subheader("☀️ Sabah Disiplini")
-uyanis_saati = st.time_input("Bugün saat kaçta uyandın?", time(7, 0)) # Varsayılan 05:00
+uyanis_saati = st.time_input("Bugün saat kaçta uyandın?", time(7, 0)) # Varsayılan 07:00
 
 st.divider()
 
-# --- BÖLÜM 1: GÜNLÜK RUTİNLER ---
-st.subheader("✅ Bugünün Görevleri")
-tarih = datetime.now().strftime("%d/%m/%Y")
-st.write(f"Tarih: {tarih}")
-
-# Sütunları 3'e çıkarıyoruz ki col3 hata vermesin
-col1, col2, col3 = st.columns(3)
-
+# --- DİĞER GİRİŞ ALANLARI ---
+col1, col2 = st.columns(2)
 with col1:
-    st.markdown("### 📖 Kur'an")
-    kuran_check = st.checkbox("Okundu", key="chk_kuran")
-    kuran_sayfa = st.number_input("Sayfa:", min_value=0, value=10, step=1, key="num_kuran")
-
+    st.markdown("### 📖 Maneviyat")
+    kuran = st.number_input("Kur'an (Sayfa)", min_value=0, value=10, key="kuran_n")
+    hadis = st.number_input("Hadis (Sayfa)", min_value=0, value=2, key="hadis_n")
 with col2:
-    st.markdown("### 📖 Hadis")
-    hadis_check = st.checkbox("Okundu", key="chk_hadis")
-    hadis_sayfa = st.number_input("Sayfa:", min_value=0, value=2, step=1, key="num_hadis")
+    st.markdown("### 💻 Gelişim & İş")
+    tefsir = st.checkbox("Tefsir Okundu mu?")
+    python = st.checkbox("Python Çalışıldı mı?")
+    export = st.checkbox("İhracat Takibi?")
 
-with col3:
-    st.markdown("### 📖 Tefsir")
-    tefsir_check = st.checkbox("Okundu", key="chk_tefsir")
+fikir = st.text_area("Yeni Fikir Notu (Parq Aura vb.)")
 
-
-# --- BÖLÜM 2: FİKİR DEFTERİ ---
-st.divider()
-st.subheader("💡 Parq Aura & Fikirler")
-kategori = st.selectbox("Kategori Seç", ["Parq Aura (Moda)", "Ekonomi & Master", "Genel"])
-fikir = st.text_area("Aklına gelen harika fikri buraya yaz...", key="idea_text")
-
-if st.button("Kaydet"):
-    st.balloons()
-    st.success("Fikir başarıyla hafızaya alındı!")
-
-# --- BÖLÜM 3: ÖZEL NOTLAR ---
-st.divider()
-with st.expander("📅 Önemli Hatırlatıcılar"):
-    st.write("- Ocak 2026 Mezuniyet Süreci")
-    st.write("- Katar Üniversitesi Başvuru Tarihleri")
-    st.write("- Ocean Export Gemi Takvimi")
-
-# Stil düzenlemesi
-st.markdown("""
-    <style>
-    .stApp { background-color: #f8f9fa; }
-    .stCheckbox { font-size: 18px !important; }
-    </style>
-    """, unsafe_allow_html=True)
+# --- KAYDETME MANTIĞI ---
+if st.button("Bugünü Veritabanına İşle"):
+    # Google Sheets'e gidecek veri formatı
+    yeni_satir = {
+        "Tarih": datetime.now().strftime("%Y-%m-%d"),
+        "Uyanis_Saati": uyanis_saati.strftime("%H:%M"),
+        "Kuran": kuran,
+        "Hadis": hadis,
+        "Tefsir": tefsir,
+        "Python": python,
+        "Ihracat": export,
+        "Fikir": fikir
+    }
+    
+    # Veriyi ekle (Bağlantı ayarı bittikten sonra çalışır)
+    try:
+        existing_data = conn.read(worksheet="Sheet1", usecols=list(range(8)))
+        updated_df = pd.concat([existing_data, pd.DataFrame([yeni_satir])], ignore_index=True)
+        conn.update(worksheet="Sheet1", data=updated_df)
+        st.success(f"Saat {uyanis_saati.strftime('%H:%M')} uyanışı ve diğer veriler kaydedildi!")
+        st.balloons()
+    except:
+        st.warning("Veri kaydedildi ama Google Sheets bağlantısı henüz tam kurulmadı. 'Secrets' ayarını yapmalısın.")
