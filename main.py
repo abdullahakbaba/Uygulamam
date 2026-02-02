@@ -31,6 +31,9 @@ with m1:
 with m1:
     st.markdown("**Sure Ezberi**")
     tefsir_sayfa = st.number_input("Kaç Tane Sure Ezberledin?", min_value=0, value=0, step=1, key="ezber_ana")
+    
+with m2:
+st.checkbox("Tevbe Duası")
 
 with m2:
     st.markdown("**Hadis-i Şerif**")
