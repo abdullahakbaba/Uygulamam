@@ -70,9 +70,11 @@ st.header("✨ Yeni Fikirler")
 fikir_kat = st.selectbox("Fikir Türü", ["İş", "Dini", "Genel", "Kişisel"])
 fikir_not = st.text_area("Notunu buraya bırak...")
 
+# --- BÖLÜM 4: KAYDETME ---
 if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     tarih_str = datetime.now().strftime('%Y-%m-%d')
-
+    
+    # Tüm verileri sözlük yapısında topluyoruz
     yeni_satir = pd.DataFrame([{
         "Tarih": tarih_str,
         "Uyanis": uyanis_saati.strftime('%H:%M'),
@@ -96,18 +98,12 @@ if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     }])
 
     try:
-        try:
-            mevcut_veri = conn.read(worksheet="Sheet1", ttl=0)
-            guncel_df = pd.concat([mevcut_veri, yeni_satir], ignore_index=True)
-        except:
-            # Sheet boşsa veya okunamıyorsa
-            guncel_df = yeni_satir
-
-        conn.update(worksheet="Sheet1", data=guncel_df)
-
-        st.success("Veri başarıyla kaydedildi ✅")
+        # Mevcut veriyi oku ve yenisini altına ekle
+        mevcut_veri = conn.read(worksheet="Sayfa1", ttl=0)
+        guncel_df = pd.concat([mevcut_veri, yeni_satir], ignore_index=True)
+        conn.update(worksheet="Sayfa1", data=guncel_df)
+        
         st.balloons()
-
+        st.success("Tüm detaylar Excel'e işlendi aga! Helal olsun.")
     except Exception as e:
-        st.error("Google Sheets'e yazılamadı ❌")
-        st.exception(e)
+        st.error(f"Hata: {e}")
