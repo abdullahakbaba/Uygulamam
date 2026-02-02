@@ -34,10 +34,14 @@ with m2:
     st.caption("Bugünkü hedef: 2")
 
 with m3:
+    st.markdown("**Sure Ezberi**")
+    tefsir_sayfa = st.number_input("Kaç Tane Sure Ezberledin?", min_value=0, value=5, step=1, key="ezber_ana")
+    
+with m3:
     st.markdown("**Tefsir**")
     tefsir_sayfa = st.number_input("Kaç Sayfa Tefsir?", min_value=0, value=5, step=1, key="tefsir_ana")
-    st.caption("Risale-i Nur vb.")
-
+    st.caption("Bugünkü hedef :2")
+    
 st.divider()
 
 # --- BÖLÜM 2: DÜNYEVİ GELİŞİM & İŞ ---
