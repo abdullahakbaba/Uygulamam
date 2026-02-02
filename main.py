@@ -28,7 +28,8 @@ m1, m2, m3, m4 = st.columns(4)
 
 with m1:
     st.markdown("**Kur'an-ı Kerim**")
-    kuran_sayfa = st.number_input("Sayfa", min_value=0, value=10, step=1, key="kuran_ana")
+    kuran_sayfa = st.number_input("Sayfa", min_value=0, value=5, step=1, key="kuran_ana")
+    st.caption("🎯 Hedef: 5 Sayfa") 
 
 with m2:
     st.markdown("**Tevbe Duası**")
@@ -37,10 +38,12 @@ with m2:
 with m3:
     st.markdown("**Hadis-i Şerif**")
     hadis_sayfa = st.number_input("Miktar", min_value=0, value=2, step=1, key="hadis_ana")
+    st.caption("🎯 Hedef: 2 Hadis")
 
 with m4:
     st.markdown("**Tefsir**")
     tefsir_sayfa = st.number_input("Sayfa", min_value=0, value=5, step=1, key="tefsir_ana")
+    st.caption("🎯 Hedef: 5 Sayfa")
     
 st.divider()
 
