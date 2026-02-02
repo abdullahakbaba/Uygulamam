@@ -11,9 +11,8 @@ try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     st.success("Google Sheets bağlantısı OK ✅")
 except Exception as e:
-    st.error("BAĞLANTI HATASI:")
-    st.code(e)
-    st.stop()
+    st.error("KAYDETME HATASI:")
+    st.exception(e)
 
 st.title("🚀 Akbaba Günlük Takip Paneli")
 
