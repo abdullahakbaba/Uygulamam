@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# Uygulama Başlığı
+# Uygulama Ayarları
 st.set_page_config(page_title="Akbaba'nın Paneli", page_icon="👔", layout="centered")
 
 st.title("🚀 Kişisel Yönetim Paneli")
@@ -12,28 +12,30 @@ st.subheader("✅ Bugünün Görevleri")
 tarih = datetime.now().strftime("%d/%m/%Y")
 st.write(f"Tarih: {tarih}")
 
-col1, col2 = st.columns(2)
+# Sütunları 3'e çıkarıyoruz ki col3 hata vermesin
+col1, col2, col3 = st.columns(3)
+
 with col1:
-    st.markdown("### 📖 Kuran-ı Kerim")
-    risale_okundu = st.checkbox("Bugün Okundu", key="rn_check")
-    # Sayı giriş alanı: Varsayılan 10, ama sen 0-500 arası istediğini yazabilirsin
-    kuran_sayfa = st.number_input("Kaç sayfa okudun?", min_value=0, value=10, step=1, key="rn_page")
+    st.markdown("### 📖 Kur'an")
+    kuran_check = st.checkbox("Okundu", key="chk_kuran")
+    kuran_sayfa = st.number_input("Sayfa:", min_value=0, value=10, step=1, key="num_kuran")
+
 with col2:
-    st.markdown("### 📖 Hadis Okuma")
-    risale_okundu = st.checkbox("Bugün Okundu", key="rn_check")
-    # Sayı giriş alanı: Varsayılan 2, ama sen 0-500 arası istediğini yazabilirsin
-    risale_sayfa = st.number_input("Kaç sayfa okudun?", min_value=0, value=10, step=1, key="rn_page")
-    a1 = st.checkbox("Tefsir")
+    st.markdown("### 📖 Hadis")
+    hadis_check = st.checkbox("Okundu", key="chk_hadis")
+    hadis_sayfa = st.number_input("Sayfa:", min_value=0, value=2, step=1, key="num_hadis")
+    tefsir_check = st.checkbox("Tefsir", key="chk_tefsir")
+
 with col3:
     st.markdown("### 💻 İş & Yazılım")
-    r3 = st.checkbox("Python/Pandas Çalışıldı")
-    r4 = st.checkbox("İhracat Evrak Takibi")
+    python_check = st.checkbox("Python", key="chk_python")
+    export_check = st.checkbox("İhracat", key="chk_export")
 
 # --- BÖLÜM 2: FİKİR DEFTERİ ---
 st.divider()
 st.subheader("💡 Parq Aura & Fikirler")
 kategori = st.selectbox("Kategori Seç", ["Parq Aura (Moda)", "Ekonomi & Master", "Genel"])
-fikir = st.text_area("Aklına gelen harika fikri buraya yaz...")
+fikir = st.text_area("Aklına gelen harika fikri buraya yaz...", key="idea_text")
 
 if st.button("Kaydet"):
     st.balloons()
@@ -46,10 +48,10 @@ with st.expander("📅 Önemli Hatırlatıcılar"):
     st.write("- Katar Üniversitesi Başvuru Tarihleri")
     st.write("- Ocean Export Gemi Takvimi")
 
-# Stil düzenlemesi (Telefon için daha şık dursun)
+# Stil düzenlemesi
 st.markdown("""
     <style>
     .stApp { background-color: #f8f9fa; }
-    .stCheckbox { font-size: 20px !important; }
+    .stCheckbox { font-size: 18px !important; }
     </style>
     """, unsafe_allow_html=True)
