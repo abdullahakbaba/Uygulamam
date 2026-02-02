@@ -3,21 +3,25 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 from datetime import datetime, time
 
+# 1. Uygulama Ayarları
 st.set_page_config(page_title="Akbaba Asistan", page_icon="📖")
+
+# 2. Bağlantı (ttl=0 her seferinde taze veri çeker)
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 st.title("🚀 Akbaba Günlük Takip")
 
-# Veri Girişleri
-uyanis = st.time_input("☀️ Uyanış", time(5, 0))
-enerji = st.select_slider("⚡ Enerji", options=["Düşük", "Orta", "Yüksek", "Fişek"])
+# --- FORM ALANLARI ---
+uyanis_v = st.time_input("☀️ Uyanış", time(5, 0))
+enerji_v = st.select_slider("⚡ Enerji", options=["Düşük", "Orta", "Yüksek", "Fişek"])
 
-c1, c2, c3, c4 = st.columns(4)
-with c1: kuran = st.number_input("Kuran", 0, 100, 5)
-with c2: tevbe = st.checkbox("Tevbe")
-with c3: hadis = st.number_input("Hadis", 0, 100, 2)
-with c4: tefsir = st.number_input("Tefsir", 0, 100, 5)
+col1, col2, col3, col4 = st.columns(4)
+with col1: kuran_v = st.number_input("Kuran", 0, 100, 5)
+with col2: tevbe_v = st.checkbox("Tevbe")
+with col3: hadis_v = st.number_input("Hadis", 0, 100, 2)
+with col4: tefsir_v = st.number_input("Tefsir", 0, 100, 5)
 
+# Dil ve Sosyal Medya (Basitleştirilmiş key'ler ile)
 st.divider()
 ik = st.checkbox("İng Kelime")
 io = st.checkbox("İng Okuma")
@@ -30,18 +34,18 @@ ay = st.checkbox("Ara Yazma")
 sh = st.checkbox("Hikaye")
 sp = st.checkbox("Post")
 sr = st.checkbox("Reels")
-fikir = st.text_area("Notlar")
+fikir_v = st.text_area("Notlar")
 
+# --- KAYIT BUTONU ---
 if st.button("💾 KAYDET"):
-    # Yeni veri paketi
-    yeni_veri = {
+    yeni_satir = {
         "Tarih": datetime.now().strftime('%Y-%m-%d'),
-        "Uyanis": uyanis.strftime('%H:%M'),
-        "Enerji": enerji,
-        "Kuran": kuran,
-        "Tevbe": "Evet" if tevbe else "Hayır",
-        "Hadis": hadis,
-        "Tefsir": tefsir,
+        "Uyanis": uyanis_v.strftime('%H:%M'),
+        "Enerji": enerji_v,
+        "Kuran": kuran_v,
+        "Tevbe": "Evet" if tevbe_v else "Hayır",
+        "Hadis": hadis_v,
+        "Tefsir": tefsir_v,
         "Ing_Kelime": "Evet" if ik else "Hayır",
         "Ing_Okuma": "Evet" if io else "Hayır",
         "Ing_Dinleme": "Evet" if id_ else "Hayır",
@@ -53,22 +57,17 @@ if st.button("💾 KAYDET"):
         "SM_Hikaye": "Evet" if sh else "Hayır",
         "SM_Post": "Evet" if sp else "Hayır",
         "SM_Reels": "Evet" if sr else "Hayır",
-        "Fikir": fikir
+        "Fikir": fikir_v
     }
 
     try:
-        # Mevcut veriyi oku
+        # Mevcut veriyi çek
         df = conn.read(worksheet="Sheet1", ttl=0)
-        
-        # Yeni satırı ekle
-        if df is not None and not df.empty:
-            df_guncel = pd.concat([df, pd.DataFrame([yeni_veri])], ignore_index=True)
-        else:
-            df_guncel = pd.DataFrame([yeni_veri])
-
-        # Tabloyu güncelle
-        conn.update(worksheet="Sheet1", data=df_guncel)
+        # Yeni veriyi ekle
+        df = pd.concat([df, pd.DataFrame([yeni_satir])], ignore_index=True)
+        # Güncelle
+        conn.update(worksheet="Sheet1", data=df)
         st.balloons()
-        st.success("Veri başarıyla işlendi aga!")
+        st.success("Sonunda uçtu veriler!")
     except Exception as e:
         st.error(f"Hata: {e}")
