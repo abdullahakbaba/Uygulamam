@@ -56,11 +56,10 @@ with c3:
 st.divider()
 fikir_v = st.text_area("✨ Yeni Fikirler")
 
-# --- BÖLÜM 4: KAYDETME (TAM SENİN TABLONA GÖRE) ---
+# --- BÖLÜM 4: KAYDETME ---
 if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     tarih_str = datetime.now().strftime('%Y-%m-%d')
     
-    # BU SÖZLÜKTEKİ İSİMLER EXCEL BAŞLIKLARIYLA %100 AYNI OLMALI
     yeni_satir = {
         "Tarih": tarih_str,
         "Uyanis": uyanis_v.strftime('%H:%M'),
@@ -84,14 +83,21 @@ if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     }
 
     try:
-        # ÖNCE OKU
+        # Mevcut veriyi taze çek (ttl=0)
         df = conn.read(worksheet="Sheet1", ttl=0)
-        # SONRA EKLE
-        df_yeni = pd.concat([df, pd.DataFrame([yeni_satir])], ignore_index=True)
-        # GÜNCELLE
+        
+        # Eğer tablo tamamen boşsa yeni dataframe oluştur, doluysa altına ekle
+        if df is not None and not df.empty:
+            df_yeni = pd.concat([df, pd.DataFrame([yeni_satir])], ignore_index=True)
+        else:
+            df_yeni = pd.DataFrame([yeni_satir])
+            
+        # Sheets'e gönder
         conn.update(worksheet="Sheet1", data=df_yeni)
         
         st.balloons()
         st.success("Aga sonunda başardık! Veri Excel'e uçtu.")
     except Exception as e:
-        st.error(f"Hata: {e}")
+        # Hatayı daha detaylı görmek için burayı güncelledim
+        st.error(f"Bağlantı Hatası: {e}")
+        st.info("İpucu: Google Sheets'teki sayfa adının 'Sheet1' olduğundan ve başlıkların yan yana olduğundan emin ol.")
