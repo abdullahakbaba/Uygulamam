@@ -25,27 +25,19 @@ m1, m2, m3 = st.columns(3)
 
 with m1:
     st.markdown("**Kur'an-ı Kerim**")
-    kuran_sayfa = st.number_input("Kaç Sayfa?", min_value=0, value=5, step=1, key="kuran_ana")
-    st.caption("Bugünkü hedef: 10")
+    kuran_sayfa = st.number_input("Sayfa", min_value=0, value=10, step=1, key="kuran_ana")
 
-with m1:
-    st.markdown("**Sure Ezberi**")
-    tefsir_sayfa = st.number_input("Kaç Tane Sure Ezberledin?", min_value=0, value=0, step=1, key="ezber_ana")
-    
 with m2:
     st.markdown("**Tevbe Duası**")
-    st.checkbox("Yapıldı", key="chk_tevbe")
-    st.caption("Günlük Tevbe")
+    st.checkbox("Yapıldı", key="chk_tevbe") # İşte istediğin sadece tikli alan
 
-with m2:
-    st.markdown("**Hadis-i Şerif**")
-    hadis_sayfa = st.number_input("Kaç Hadis/Sayfa?", min_value=0, value=2, step=1, key="hadis_ana")
-    st.caption("Bugünkü hedef: 2")
-    
 with m3:
+    st.markdown("**Hadis-i Şerif**")
+    hadis_sayfa = st.number_input("Miktar", min_value=0, value=2, step=1, key="hadis_ana")
+
+with m4:
     st.markdown("**Tefsir**")
-    tefsir_sayfa = st.number_input("Kaç Sayfa Tefsir?", min_value=0, value=2, step=1, key="tefsir_ana")
-    st.caption("Bugünkü hedef :2")
+    tefsir_sayfa = st.number_input("Sayfa", min_value=0, value=5, step=1, key="tefsir_ana")
     
 st.divider()
 
