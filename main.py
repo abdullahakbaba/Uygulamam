@@ -74,7 +74,6 @@ fikir_not = st.text_area("Notunu buraya bırak...", key="f_n")
 if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     tarih_str = datetime.now().strftime('%Y-%m-%d')
     
-    # Verileri topluyoruz (Değişken isimleri yukarıdakilerle birebir aynı)
     yeni_satir = pd.DataFrame([{
         "Tarih": tarih_str,
         "Uyanis": uyanis_saati.strftime('%H:%M'),
@@ -98,8 +97,17 @@ if st.button("💾 VERİLERİ GOOGLE SHEETS'E KAYDET"):
     }])
 
     try:
-        # worksheet ismini "Sheet1" olarak kullanıyoruz, Google Sheets'te de böyle yap aga
+        # worksheet ismini "Sheet1" olarak kullanıyoruz
         mevcut_veri = conn.read(worksheet="Sheet1", ttl=0)
         
         if mevcut_veri is not None and not mevcut_veri.empty:
-            guncel_df = pd.concat([mevcut_veri, yeni
+            guncel_df = pd.concat([mevcut_veri, yeni_satir], ignore_index=True)
+        else:
+            guncel_df = yeni_satir
+
+        conn.update(worksheet="Sheet1", data=guncel_df)
+        
+        st.balloons()
+        st.success("Tüm detaylar Excel'e işlendi aga! Helal olsun.")
+    except Exception as e:
+        st.error(f"Hata: {e}")
