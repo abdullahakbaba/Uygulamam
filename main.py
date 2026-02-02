@@ -74,7 +74,7 @@ st.divider()
 
 # --- BÖLÜM 3: Yeni Fikirler ---
 st.header("✨ Yeni Fikirler")
-fikir_kategori = st.selectbox("Fikir Türü", ["Model/Tasarım", "Kumaş", "Pazarlama", "Genel"])
+fikir_kategori = st.selectbox("Fikir Türü", ["İş", "Dini", "Genel"])
 fikir_notu = st.text_area("Aklına gelen detayı buraya bırak...")
 
 # --- BÖLÜM 4: KAYDETME ---
