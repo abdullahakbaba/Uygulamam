@@ -7,6 +7,12 @@ st.set_page_config(page_title="Akbaba'nın Paneli", page_icon="👔", layout="ce
 
 st.title("🚀 Kişisel Yönetim Paneli")
 
+# --- UYANIŞ SAATİ ---
+st.subheader("☀️ Sabah Disiplini")
+uyanis_saati = st.time_input("Bugün saat kaçta uyandın?", time(7, 0)) # Varsayılan 05:00
+
+st.divider()
+
 # --- BÖLÜM 1: GÜNLÜK RUTİNLER ---
 st.subheader("✅ Bugünün Görevleri")
 tarih = datetime.now().strftime("%d/%m/%Y")
