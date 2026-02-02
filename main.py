@@ -14,11 +14,17 @@ st.write(f"Tarih: {tarih}")
 
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown("### 📖 Risale-i Nur")
+    st.markdown("### 📖 Kuran-ı Kerim")
     risale_okundu = st.checkbox("Bugün Okundu", key="rn_check")
     # Sayı giriş alanı: Varsayılan 10, ama sen 0-500 arası istediğini yazabilirsin
-    risale_sayfa = st.number_input("Kaç sayfa okudun?", min_value=0, value=10, step=1, key="rn_page")
+    kuran_sayfa = st.number_input("Kaç sayfa okudun?", min_value=0, value=10, step=1, key="rn_page")
 with col2:
+    st.markdown("### 📖 Hadis Okuma")
+    risale_okundu = st.checkbox("Bugün Okundu", key="rn_check")
+    # Sayı giriş alanı: Varsayılan 2, ama sen 0-500 arası istediğini yazabilirsin
+    risale_sayfa = st.number_input("Kaç sayfa okudun?", min_value=0, value=10, step=1, key="rn_page")
+    a1 = st.checkbox("Tefsir")
+with col3:
     st.markdown("### 💻 İş & Yazılım")
     r3 = st.checkbox("Python/Pandas Çalışıldı")
     r4 = st.checkbox("İhracat Evrak Takibi")
