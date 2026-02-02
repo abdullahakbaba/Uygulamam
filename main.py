@@ -25,12 +25,12 @@ m1, m2, m3 = st.columns(3)
 
 with m1:
     st.markdown("**Kur'an-ı Kerim**")
-    kuran_sayfa = st.number_input("Kaç Sayfa?", min_value=0, value=10, step=1, key="kuran_ana")
+    kuran_sayfa = st.number_input("Kaç Sayfa?", min_value=0, value=5, step=1, key="kuran_ana")
     st.caption("Bugünkü hedef: 10")
 
 with m1:
     st.markdown("**Sure Ezberi**")
-    tefsir_sayfa = st.number_input("Kaç Tane Sure Ezberledin?", min_value=0, value=1, step=1, key="ezber_ana")
+    tefsir_sayfa = st.number_input("Kaç Tane Sure Ezberledin?", min_value=0, value=0, step=1, key="ezber_ana")
 
 with m2:
     st.markdown("**Hadis-i Şerif**")
